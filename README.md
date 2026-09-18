@@ -19,11 +19,15 @@ anything if a visitor taps it, so a half-finished page never misdirects anyone.
 
 | Where | What it needs |
 | --- | --- |
-| Photo | A square photo saved in this repo as `avatar.jpg` (600×600 is plenty) |
-| TikTok / YouTube / Work with me | Parked in a comment below the Instagram link. Uncomment a block once its URL or address exists |
 | Paid slot | The Gumroad link, replacing `PUT_THE_GUMROAD_LINK_HERE` |
-| Before / after | Two photos of the same shot saved as `presets-before.jpg` and `presets-after.jpg` |
+| TikTok / YouTube | Parked in a comment below the Instagram link. Uncomment a block once its URL exists |
 | Mailing list | A form endpoint — see below |
+
+The profile photo and the before/after pair are in place. The pair was rendered
+by applying the **06 Warm Portrait** preset's own settings to `presets-before.jpg`
+outside Lightroom, so treat it as a close approximation rather than the exact
+output. Worth replacing with a real Lightroom export before the launch push —
+same photo, preset applied on the phone, screenshot.
 
 ## Putting the page online
 
