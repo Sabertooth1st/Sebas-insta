@@ -14,10 +14,10 @@ GitHub Pages hosts it free and gives a real URL for the bio:
 
 1. Repo **Settings** → **Pages**.
 2. Under **Source**, pick **Deploy from a branch**.
-3. Branch `main`, folder `/ (root)`. Save.
+3. Pick the repo's default branch, folder `/ (root)`. Save.
 
 A minute later it is live at `https://sabertooth1st.github.io/Sebas-insta/`, and that
-is what goes in the Instagram bio. Every push updates it.
+is what goes in the Instagram bio. Every push to that branch updates it.
 
 A custom domain is a nicer link and costs about $10 a year. Worth doing, but not
 before there is something to sell.
