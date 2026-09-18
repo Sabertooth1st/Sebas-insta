@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ============================================================
+     EDIT THESE THREE LINES FIRST
+     ============================================================ -->
+<title>Sebastian Uzice</title>
+<meta name="description" content="Links, and the stuff I make.">
+
+<style>
+:root {
+  --bg: #faf9f7;
+  --surface: #ffffff;
+  --text: #16150f;
+  --muted: #6b6a63;
+  --line: #e6e3dd;
+  --accent: #1b1a16;
+  --accent-text: #ffffff;
+  --highlight: #f0efe9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #100f0d;
+    --surface: #1a1916;
+    --text: #f5f3ee;
+    --muted: #9b998f;
+    --line: #2c2a26;
+    --accent: #f5f3ee;
+    --accent-text: #16150f;
+    --highlight: #222019;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #100f0d;
+  --surface: #1a1916;
+  --text: #f5f3ee;
+  --muted: #9b998f;
+  --line: #2c2a26;
+  --accent: #f5f3ee;
+  --accent-text: #16150f;
+  --highlight: #222019;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 48px 16px 64px;
+}
+
+/* ---------- header ---------- */
+
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  margin: 0 auto 18px;
+  display: block;
+  object-fit: cover;
+  background: var(--highlight);
+  border: 1px solid var(--line);
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin: 0 0 6px;
+}
+
+.handle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 14px;
+}
+
+.handle a { color: inherit; text-decoration: none; }
+.handle a:hover { text-decoration: underline; }
+
+.bio {
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 auto 32px;
+  max-width: 380px;
+}
+
+/* ---------- the paid slot ---------- */
+
+.feature {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 28px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.feature h2 {
+  font-size: 17px;
+  font-weight: 620;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.feature p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.buy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.price { font-size: 15px; font-weight: 600; }
+
+.btn {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ---------- links ---------- */
+
+.links { display: flex; flex-direction: column; gap: 10px; }
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 15px 18px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.link:hover { transform: translateY(-2px); border-color: var(--muted); }
+
+.link .arrow { margin-left: auto; color: var(--muted); font-size: 16px; }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Drop a square photo in the repo as avatar.jpg and it shows up here. -->
+  <img class="avatar" src="avatar.jpg" alt="" onerror="this.style.display='none'">
+
+  <h1>Sebastian Uzice</h1>
+  <p class="handle"><a href="https://www.instagram.com/sebastianuzice/">@sebastianuzice</a></p>
+  <p class="bio">One line on who this is for and what they get. Replace this.</p>
+
+  <!-- ============================================================
+       THE PAID SLOT. This is the only part that makes money.
+       Point href at the Gumroad (or Stripe) checkout once it exists.
+       Delete this whole block until there is something to sell.
+       ============================================================ -->
+  <a class="feature" href="#">
+    <span class="tag">New</span>
+    <h2>Name of the thing you sell</h2>
+    <p>One sentence on the result someone gets from it.</p>
+    <div class="buy">
+      <span class="price">$0</span>
+      <span class="btn">Get it</span>
+    </div>
+  </a>
+
+  <div class="links">
+    <a class="link" href="https://www.instagram.com/sebastianuzice/">
+      Instagram <span class="arrow">&rarr;</span>
+    </a>
+    <a class="link" href="#">
+      YouTube <span class="arrow">&rarr;</span>
+    </a>
+    <a class="link" href="#">
+      Work with me <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+
+  <footer>&copy; Sebastian Uzice</footer>
+
+</div>
+</body>
+</html>
