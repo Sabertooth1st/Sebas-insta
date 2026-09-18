@@ -179,7 +179,12 @@ a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
    button and shows the waiting-list line instead — so the page can go
    live at any moment without ever showing a button that goes nowhere.
    Paste the real link and the buy row comes back on its own. */
-.pending { display: none; margin-top: 16px; font-size: 14px; font-weight: 600; }
+.feature .pending {
+  display: none;
+  margin-top: 16px;
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+}
 a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .buy { display: none; }
 a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .pending { display: block; }
 
