@@ -23,7 +23,8 @@ page never sends someone to the wrong place.
 | Bio line | One line on who this is for and what they get |
 | TikTok / YouTube | Real URLs, or delete those two blocks |
 | Work with me | A real address, replacing `hello@example.com` in both places |
-| Paid slot | A checkout link, once there is something to sell |
+| Paid slot | The Gumroad link, replacing `PUT_THE_GUMROAD_LINK_HERE` |
+| Before / after | Two photos of the same shot saved as `presets-before.jpg` and `presets-after.jpg` |
 | Mailing list | A form endpoint — see below |
 
 ## Putting the page online
@@ -79,10 +80,17 @@ and starts posting to it. A hidden honeypot field already filters most bots.
 In order of what matters:
 
 1. The name, handle and bio line, at the top of the `<body>`.
-2. The paid slot — the bordered card. Until there is a product it shows a
-   waiting-list card, which turns attention into email addresses instead of
-   sending people to a dead button. When a checkout link exists, delete that
-   block and uncomment the `<a class="feature">` below it.
+2. The paid slot — the bordered card at the top. It is already filled in for
+   the preset pack. One thing is missing: create the product on Gumroad, then
+   replace `PUT_THE_GUMROAD_LINK_HERE` with the link it gives you. Nothing else
+   changes — the price and the **Get it** button appear on their own. Until
+   then the card shows "not on sale yet", points at the mailing list and
+   refuses to be tapped, so the page is safe to put live before the checkout
+   exists.
+
+   The before-and-after pair is what actually sells presets. Save the same
+   photo edited and unedited as `presets-after.jpg` and `presets-before.jpg`
+   (portrait crop). The block hides itself until both are there.
 3. The links. There is a `COPY ME` block in the comments to paste for a new one.
    Put the real URL in `href` and delete `data-placeholder` to make a link live.
 
@@ -93,9 +101,13 @@ handled already.
 ## Taking payment
 
 Gumroad is the fastest way to start: free to open, hosts the file and the
-checkout, takes a cut per sale. Stripe is cheaper per sale but you have to build
-the checkout, so it is worth moving to later, not now. Either way the account has
-to be created by hand; once the product link exists it goes in the paid slot.
+checkout, handles receipts and sales tax, and takes a cut per sale. Stripe is
+cheaper per sale but you have to build the checkout, so it is worth moving to
+later, not now.
+
+The account has to be created by hand — it needs a real name, email and bank
+details. Once the product is published, its link goes in the paid slot and the
+page starts selling.
 
 ## Adding analytics later
 

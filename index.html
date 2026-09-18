@@ -175,9 +175,29 @@ a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
   white-space: nowrap;
 }
 
-/* the waiting-list version of the slot, used until there is a product */
-.waiting { text-align: center; }
-.waiting h2 { margin-bottom: 6px; }
+/* Until the checkout link is pasted in, the card hides its price and
+   button and shows the waiting-list line instead — so the page can go
+   live at any moment without ever showing a button that goes nowhere.
+   Paste the real link and the buy row comes back on its own. */
+.pending { display: none; margin-top: 16px; font-size: 14px; font-weight: 600; }
+a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .buy { display: none; }
+a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .pending { display: block; }
+
+/* before / after pair. Drop the two photos in and they appear. */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.compare[hidden] { display: none; }
+.compare figure { margin: 0; position: relative; }
+.compare img {
+  display: block; width: 100%;
+  aspect-ratio: 4 / 5; object-fit: cover;
+  border-radius: 10px; background: var(--highlight);
+}
+.compare figcaption {
+  position: absolute; left: 8px; bottom: 8px;
+  font-size: 10px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase;
+  color: #fff; background: rgba(0,0,0,.55);
+  padding: 2px 8px; border-radius: 999px;
+}
 
 /* ---------- links ---------- */
 
@@ -311,29 +331,40 @@ footer a { color: inherit; }
   <!-- ============================================================
        THE PAID SLOT. This is the only part that makes money.
 
-       While there is nothing to sell it shows a waiting-list card,
-       which turns attention into email addresses instead of sending
-       people to a dead button. The moment a checkout link exists,
-       delete this <div> and uncomment the <a class="feature"> below.
+       ONE THING TO DO: create the Gumroad product (see the pack notes
+       in the project files), then replace PUT_THE_GUMROAD_LINK_HERE
+       below with the link Gumroad gives you. Nothing else changes —
+       the price and the Get it button appear by themselves, and until
+       then the card shows the waiting-list line and cannot be tapped.
        ============================================================ -->
-  <div class="feature waiting">
-    <span class="tag">Coming</span>
-    <h2>First drop is in the works</h2>
-    <p>Join the list below and you'll hear about it before it goes on the feed.</p>
-  </div>
-
-  <!-- READY TO SELL? Delete the block above, uncomment this one, fill in the blanks.
-       href points at a Gumroad, Stan Store, Ko-fi or Stripe payment link.
-  <a class="feature" href="PUT_THE_CHECKOUT_LINK_HERE" target="_blank" rel="noopener" data-track="product">
+  <a class="feature" href="PUT_THE_GUMROAD_LINK_HERE" target="_blank" rel="noopener" data-track="product">
     <span class="tag">New</span>
-    <h2>Name of the thing you sell</h2>
-    <p>One sentence on the result someone gets from it.</p>
+    <h2>Sebastian Signature — 10 Lightroom presets</h2>
+    <p>One consistent look across the whole grid, in one tap, in the free Lightroom app.</p>
+
+    <!-- The before-and-after is what sells this. Save the two photos in the
+         repo as presets-before.jpg and presets-after.jpg (same shot, edited
+         and unedited, portrait crop). Until both exist this block hides itself. -->
+    <div class="compare" id="compare">
+      <figure>
+        <img src="presets-before.jpg" alt="A photo before the preset" loading="lazy"
+             onerror="document.getElementById('compare').hidden = true">
+        <figcaption>Before</figcaption>
+      </figure>
+      <figure>
+        <img src="presets-after.jpg" alt="The same photo after the preset" loading="lazy"
+             onerror="document.getElementById('compare').hidden = true">
+        <figcaption>After</figcaption>
+      </figure>
+    </div>
+
     <div class="buy">
-      <span class="price">$0</span>
+      <span class="price">$12 <span style="font-weight:400;color:var(--muted)">first week, then $19</span></span>
       <span class="btn">Get it</span>
     </div>
+
+    <p class="pending">Not on sale yet — join the list below and you'll get it first.</p>
   </a>
-  -->
 
   <!-- ============================================================
        LINKS
@@ -439,12 +470,23 @@ footer a { color: inherit; }
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // A half-finished link shouldn't bounce a visitor to the top of the page.
-  document.querySelectorAll("a[data-placeholder]").forEach(function (a) {
-    if (a.getAttribute("href") === "#") {
+  // A half-finished link shouldn't bounce a visitor to the top of the page,
+  // and neither should the product card before the checkout link exists.
+  document.querySelectorAll("a[data-placeholder], a[href='PUT_THE_GUMROAD_LINK_HERE']").forEach(function (a) {
+    var href = a.getAttribute("href");
+    if (href === "#" || href === "PUT_THE_GUMROAD_LINK_HERE") {
       a.addEventListener("click", function (e) { e.preventDefault(); });
     }
   });
+
+  // Belt and braces for the before/after pair: the inline onerror above
+  // catches a failure as it happens, this catches one that already did.
+  var compare = document.getElementById("compare");
+  if (compare) {
+    compare.querySelectorAll("img").forEach(function (img) {
+      if (img.complete && img.naturalWidth === 0) compare.hidden = true;
+    });
+  }
 
   // No-op until Plausible or Google Analytics is added to <head>.
   document.querySelectorAll("[data-track]").forEach(function (el) {
