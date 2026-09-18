@@ -12,17 +12,15 @@ The landing page behind the Instagram bio link, and the plan for what gets poste
 
 ## What is still a placeholder
 
-Search `index.html` for `PLACEHOLDER` and `EDIT ME` and you will find all of it.
-Links that still point nowhere are drawn with a dashed border and a **set me**
-pill, and they refuse to do anything if a visitor taps them — so a half-finished
-page never sends someone to the wrong place.
+The page is safe to publish as it stands: nothing on it points anywhere dead.
+Search `index.html` for `EDIT ME` to find what is worth filling in. A link left
+mid-edit is drawn with a dashed border and a **set me** pill and refuses to do
+anything if a visitor taps it, so a half-finished page never misdirects anyone.
 
 | Where | What it needs |
 | --- | --- |
 | Photo | A square photo saved in this repo as `avatar.jpg` (600×600 is plenty) |
-| Bio line | One line on who this is for and what they get |
-| TikTok / YouTube | Real URLs, or delete those two blocks |
-| Work with me | A real address, replacing `hello@example.com` in both places |
+| TikTok / YouTube / Work with me | Parked in a comment below the Instagram link. Uncomment a block once its URL or address exists |
 | Paid slot | The Gumroad link, replacing `PUT_THE_GUMROAD_LINK_HERE` |
 | Before / after | Two photos of the same shot saved as `presets-before.jpg` and `presets-after.jpg` |
 | Mailing list | A form endpoint — see below |
