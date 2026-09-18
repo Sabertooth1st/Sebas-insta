@@ -5,29 +5,41 @@ The landing page behind the Instagram bio link, and the plan for what gets poste
 ## What is here
 
 - `index.html` — the page people land on when they tap the bio link. One file:
-  markup, styles and script all live in it, so there is no build step and nothing
-  to install. Open it in a browser and what you see is what gets published.
-- `avatar-placeholder.svg` — the neutral photo shown until a real one exists.
+  markup, styles and script all live in it, so there is no build step and
+  nothing to install. Open it in a browser and what you see is what gets
+  published.
+- `before.jpg`, `after.jpg` — the transformation pair at the top of the page.
+- `avatar.jpg` — the profile photo, with `avatar-placeholder.svg` as its fallback.
 - `content/14-day-plan.md` — what to post, in what order, and when the product goes live.
 
-## What is still a placeholder
+The page is built around one thing: the before and after, then the plan that
+produced it. Everything else on the page is secondary to those two.
 
-The page is safe to publish as it stands: nothing on it points anywhere dead.
-Search `index.html` for `EDIT ME` to find what is worth filling in. A link left
-mid-edit is drawn with a dashed border and a **set me** pill and refuses to do
-anything if a visitor taps it, so a half-finished page never misdirects anyone.
+## What is still outstanding
 
 | Where | What it needs |
 | --- | --- |
-| Paid slot | The Gumroad link, replacing `PUT_THE_GUMROAD_LINK_HERE` |
+| The plan | The Gumroad link, replacing `PUT_THE_GUIDE_LINK_HERE` |
+| Presets | The Gumroad link, replacing `PUT_THE_PRESETS_LINK_HERE` |
 | TikTok / YouTube | Parked in a comment below the Instagram link. Uncomment a block once its URL exists |
 | Mailing list | A form endpoint — see below |
 
-The profile photo and the before/after pair are in place. The pair was rendered
-by applying the **06 Warm Portrait** preset's own settings to `presets-before.jpg`
-outside Lightroom, so treat it as a close approximation rather than the exact
-output. Worth replacing with a real Lightroom export before the launch push —
-same photo, preset applied on the phone, screenshot.
+Nothing on the page points anywhere dead, so it is safe to publish as it
+stands. Search `index.html` for `EDIT ME` to find the copy worth revisiting.
+
+## Arming a thing for sale
+
+Both cards work the same way. Each carries `data-pending`, and while that
+attribute is there the card hides its price and its button, shows a line
+pointing at the mailing list instead, and refuses to be tapped.
+
+To put something on sale, make two edits to that card:
+
+1. Put the real checkout URL in `href`.
+2. Delete `data-pending`.
+
+The price and the **Get it** button appear on their own. That is the whole
+change — there is nothing else to switch on.
 
 ## Putting the page online
 
@@ -81,24 +93,22 @@ and starts posting to it. A hidden honeypot field already filters most bots.
 
 In order of what matters:
 
-1. The name, handle and bio line, at the top of the `<body>`.
-2. The paid slot — the bordered card at the top. It is already filled in for
-   the preset pack. One thing is missing: create the product on Gumroad, then
-   replace `PUT_THE_GUMROAD_LINK_HERE` with the link it gives you. Nothing else
-   changes — the price and the **Get it** button appear on their own. Until
-   then the card shows "not on sale yet", points at the mailing list and
-   refuses to be tapped, so the page is safe to put live before the checkout
-   exists.
-
-   The before-and-after pair is what actually sells presets. Save the same
-   photo edited and unedited as `presets-after.jpg` and `presets-before.jpg`
-   (portrait crop). The block hides itself until both are there.
-3. The links. There is a `COPY ME` block in the comments to paste for a new one.
-   Put the real URL in `href` and delete `data-placeholder` to make a link live.
+1. **The before and after.** Replace `before.jpg` and `after.jpg` to change it.
+   They are shown at 2:3 and cropped to fill, so tall photos work best. If
+   either file is missing the whole block hides itself rather than showing a
+   broken image.
+2. **The bio line and the plan card.** The two pieces of copy that decide
+   whether anyone scrolls.
+3. **"What it took".** The list of rules, in his own words. It is what makes
+   the card above believable, which is why it sits directly under it.
+4. **The links.** There is a `COPY ME` block in the comments to paste for a new
+   one. Put the real URL in `href` and delete `data-placeholder` to make a link
+   live; leave the attribute on and it shows a dashed **set me** pill and
+   cannot be tapped.
 
 The colours are the tokens at the top of the `<style>` block. `--brand` drives
-the icons and focus rings; `--accent` drives the buttons. Light and dark are both
-handled already.
+the icons and focus rings; `--accent` drives the buttons. Light and dark are
+both handled already.
 
 ## Taking payment
 
@@ -108,8 +118,7 @@ cheaper per sale but you have to build the checkout, so it is worth moving to
 later, not now.
 
 The account has to be created by hand — it needs a real name, email and bank
-details. Once the product is published, its link goes in the paid slot and the
-page starts selling.
+details. Once a product is published, its link goes in the matching card.
 
 ## Adding analytics later
 

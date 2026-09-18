@@ -8,7 +8,7 @@
      EDIT THESE FIRST — they show in Google and in link previews
      ============================================================ -->
 <title>Sebastian Uzice</title>
-<meta name="description" content="Links, and the stuff I make.">
+<meta name="description" content="I started at 177kg. This is what I did about it.">
 
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
@@ -18,9 +18,9 @@
      Swap the two URLs once the page is live at its real address. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sebastian Uzice">
-<meta property="og:description" content="Links, and the stuff I make.">
+<meta property="og:description" content="I started at 177kg. This is what I did about it.">
 <meta property="og:url" content="https://sabertooth1st.github.io/Sebas-insta/">
-<meta property="og:image" content="https://sabertooth1st.github.io/Sebas-insta/avatar.jpg">
+<meta property="og:image" content="https://sabertooth1st.github.io/Sebas-insta/after.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316150f'/%3E%3Ctext x='16' y='22' font-size='16' font-family='system-ui,sans-serif' font-weight='700' fill='%23faf9f7' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
@@ -43,7 +43,7 @@
   --accent:    #1b1a16;   /* buttons */
   --accent-text:#ffffff;
   --highlight: #f0efe9;
-  --brand:     #c2410c;   /* small accents: icons, focus rings, links */
+  --brand:     #c2410c;   /* small accents: icons, focus rings */
   --ok:        #2f7d52;
   --err:       #b3261e;
   --radius:    16px;
@@ -130,13 +130,36 @@ h1 {
 
 .bio {
   text-align: center;
-  color: var(--muted);
-  font-size: 15px;
-  margin: 0 auto 32px;
-  max-width: 380px;
+  font-size: 17px;
+  margin: 0 auto 28px;
+  max-width: 340px;
+  text-wrap: balance;
 }
 
-/* ---------- the paid slot ---------- */
+/* ---------- the before and after ---------- */
+
+.transform { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.transform[hidden] { display: none; }
+.transform figure { margin: 0; position: relative; }
+.transform img {
+  display: block; width: 100%;
+  aspect-ratio: 2 / 3; object-fit: cover;
+  border-radius: 12px; background: var(--highlight);
+}
+.transform figcaption {
+  position: absolute; left: 10px; bottom: 10px;
+  font-size: 11px; font-weight: 650; letter-spacing: .07em; text-transform: uppercase;
+  color: #fff; background: rgba(0,0,0,.55);
+  padding: 3px 9px; border-radius: 999px;
+}
+.transform-note {
+  margin: 0 0 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- a thing for sale ---------- */
 
 .feature {
   display: block;
@@ -146,7 +169,6 @@ h1 {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px;
-  margin-bottom: 28px;
   transition: transform .15s ease, border-color .15s ease;
 }
 a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
@@ -165,6 +187,7 @@ a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
 
 .buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .price { font-size: 15px; font-weight: 600; }
+.price span { font-size: 13px; font-weight: 400; color: var(--muted); }
 
 .btn {
   background: var(--accent);
@@ -175,44 +198,65 @@ a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
   white-space: nowrap;
 }
 
-/* Until the checkout link is pasted in, the card hides its price and
-   button and shows the waiting-list line instead — so the page can go
-   live at any moment without ever showing a button that goes nowhere.
-   Paste the real link and the buy row comes back on its own. */
+/* Until the checkout link is pasted in, a card hides its price and button
+   and shows the waiting-list line instead — so the page can go live at any
+   moment without a button that goes nowhere. To arm a card: put the real
+   URL in href and delete data-pending. That is the whole edit. */
 .feature .pending {
   display: none;
   margin-top: 16px;
   font-size: 14px; font-weight: 600;
   color: var(--text);
 }
-a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .buy { display: none; }
-a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .pending { display: block; }
+a.feature[data-pending] .buy { display: none; }
+a.feature[data-pending] .pending { display: block; }
 
-/* before / after pair. Drop the two photos in and they appear. */
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
-.compare[hidden] { display: none; }
-.compare figure { margin: 0; position: relative; }
-.compare img {
-  display: block; width: 100%;
-  aspect-ratio: 4 / 5; object-fit: cover;
-  border-radius: 10px; background: var(--highlight);
-}
-.compare figcaption {
-  position: absolute; left: 8px; bottom: 8px;
-  font-size: 10px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase;
-  color: #fff; background: rgba(0,0,0,.55);
-  padding: 2px 8px; border-radius: 999px;
-}
+/* the smaller card further down the page */
+.feature.compact { padding: 16px; }
+.feature.compact h2 { font-size: 15px; }
+.feature.compact .buy { margin-top: 12px; }
 
-/* ---------- links ---------- */
+/* ---------- how ---------- */
 
 .section-title {
-  margin: 28px 0 10px 2px;
+  margin: 30px 0 10px 2px;
   font-size: 11px; font-weight: 650;
   letter-spacing: .1em; text-transform: uppercase;
   color: var(--muted);
 }
-.section-title.first { margin-top: 0; }
+
+.rules {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+}
+.rules li {
+  position: relative;
+  padding: 11px 0 11px 26px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--line);
+}
+.rules li:last-child { border-bottom: 0; }
+.rules li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 19px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.quote {
+  margin: 14px 0 0;
+  padding: 16px 18px;
+  background: var(--highlight);
+  border-radius: var(--radius);
+  font-size: 16px;
+}
+.quote p { margin: 0; }
+.quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--muted); }
+
+/* ---------- links ---------- */
 
 .links { display: flex; flex-direction: column; gap: 10px; }
 
@@ -251,9 +295,8 @@ a.feature[href="PUT_THE_GUMROAD_LINK_HERE"] .pending { display: block; }
 .arrow { margin-left: auto; color: var(--muted); font-size: 16px; transition: transform .15s ease; }
 .link:hover .arrow { transform: translateX(3px); }
 
-/* a link that still points nowhere: obvious to you, and it refuses
-   to do anything if a visitor taps it. Delete data-placeholder to
-   make it a normal link. */
+/* a link that still points nowhere: obvious to you, and it refuses to do
+   anything if a visitor taps it. Delete data-placeholder to make it normal. */
 .link[data-placeholder] { opacity: .6; border-style: dashed; }
 .link[data-placeholder] .arrow::before {
   content: "set me";
@@ -321,8 +364,8 @@ footer a { color: inherit; }
 
 <div class="wrap">
 
-  <!-- Drop a square photo in the repo as avatar.jpg and it shows up here.
-       Until then the page shows a neutral placeholder rather than a broken image. -->
+  <!-- Square photo, in the repo as avatar.jpg. If it ever goes missing the
+       page falls back to a neutral placeholder rather than a broken image. -->
   <img class="avatar" src="avatar.jpg" alt="Sebastian Uzice"
        width="88" height="88"
        onerror="this.src='avatar-placeholder.svg'">
@@ -330,41 +373,44 @@ footer a { color: inherit; }
   <h1>Sebastian Uzice</h1>
   <p class="handle"><a href="https://www.instagram.com/sebastianuzice/">@sebastianuzice</a></p>
 
-  <!-- EDIT ME: one line on who this is for and what they get. -->
-  <p class="bio">Photos, and the presets I edit them with.</p>
+  <!-- EDIT ME: the one line that has to land. -->
+  <p class="bio">I started at 177kg. This is what I did about it.</p>
 
   <!-- ============================================================
-       THE PAID SLOT. This is the only part that makes money.
-
-       ONE THING TO DO: create the Gumroad product (see the pack notes
-       in the project files), then replace PUT_THE_GUMROAD_LINK_HERE
-       below with the link Gumroad gives you. Nothing else changes —
-       the price and the Get it button appear by themselves, and until
-       then the card shows the waiting-list line and cannot be tapped.
+       THE BEFORE AND AFTER. This is the whole page in one glance,
+       so it sits above everything else. Both photos are his own.
+       Swap either by replacing before.jpg / after.jpg.
        ============================================================ -->
-  <a class="feature" href="PUT_THE_GUMROAD_LINK_HERE" target="_blank" rel="noopener" data-track="product">
-    <span class="tag">New</span>
-    <h2>Sebastian Signature — 10 Lightroom presets</h2>
-    <p>One consistent look across the whole grid, in one tap, in the free Lightroom app.</p>
+  <div class="transform" id="transform">
+    <figure>
+      <img src="before.jpg" alt="Sebastian before losing the weight" loading="eager"
+           onerror="document.getElementById('transform').hidden = true">
+      <figcaption>Before</figcaption>
+    </figure>
+    <figure>
+      <img src="after.jpg" alt="Sebastian now" loading="eager"
+           onerror="document.getElementById('transform').hidden = true">
+      <figcaption>Now</figcaption>
+    </figure>
+  </div>
+  <p class="transform-note">Same person. The how is below.</p>
 
-    <!-- The before-and-after is what sells this. Save the two photos in the
-         repo as presets-before.jpg and presets-after.jpg (same shot, edited
-         and unedited, portrait crop). Until both exist this block hides itself. -->
-    <div class="compare" id="compare">
-      <figure>
-        <img src="presets-before.jpg" alt="A photo before the preset" loading="lazy"
-             onerror="document.getElementById('compare').hidden = true">
-        <figcaption>Before</figcaption>
-      </figure>
-      <figure>
-        <img src="presets-after.jpg" alt="The same photo after the preset" loading="lazy"
-             onerror="document.getElementById('compare').hidden = true">
-        <figcaption>After</figcaption>
-      </figure>
-    </div>
+  <!-- ============================================================
+       THE MAIN PAID SLOT — the guide.
+
+       ONE THING TO DO: publish the guide on Gumroad, then put the
+       link it gives you in href and delete data-pending. The price
+       and the button appear by themselves. Until then the card says
+       it is not on sale, points at the mailing list, and cannot be
+       tapped, so the page is safe to publish right now.
+       ============================================================ -->
+  <a class="feature" href="PUT_THE_GUIDE_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="guide">
+    <span class="tag">The plan</span>
+    <h2>What I actually did</h2>
+    <p>The fasting window, what I cut, what I ate instead, and how the training week was laid out. Written the way I'd tell a friend, not a textbook.</p>
 
     <div class="buy">
-      <span class="price">$12 <span style="font-weight:400;color:var(--muted)">first week, then $19</span></span>
+      <span class="price">$19 <span>one-off</span></span>
       <span class="btn">Get it</span>
     </div>
 
@@ -372,11 +418,48 @@ footer a { color: inherit; }
   </a>
 
   <!-- ============================================================
+       HOW. His own rules, in his own words. This is what makes the
+       card above believable, so it sits right under it.
+       ============================================================ -->
+  <h2 class="section-title">What it took</h2>
+
+  <ul class="rules">
+    <li>Six days a week. Weightlifting and cardio.</li>
+    <li>16:8 — everything I ate, inside an eight-hour window.</li>
+    <li>No carbs, no sugar. For a year.</li>
+    <li>Protein over carbs. That was the switch.</li>
+    <li>I started at home, where nobody could see me.</li>
+  </ul>
+
+  <blockquote class="quote">
+    <p>“Consistency is the key.”</p>
+    <cite>— Michael</cite>
+  </blockquote>
+
+  <!-- ============================================================
+       SECOND THING FOR SALE. Same rules as the card above: put the
+       Gumroad link in href and delete data-pending to arm it.
+       ============================================================ -->
+  <h2 class="section-title">Also</h2>
+
+  <a class="feature compact" href="PUT_THE_PRESETS_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="presets">
+    <h2>Sebastian Signature — 10 Lightroom presets</h2>
+    <p>One consistent look across a whole grid, in one tap, in the free Lightroom app.</p>
+
+    <div class="buy">
+      <span class="price">$12 <span>first week, then $19</span></span>
+      <span class="btn">Get it</span>
+    </div>
+
+    <p class="pending">Not on sale yet — the list below hears first.</p>
+  </a>
+
+  <!-- ============================================================
        LINKS
        To add one: copy a whole <a class="link"> ... </a> block,
        change the href, the icon and the two lines of text.
        ============================================================ -->
-  <h2 class="section-title first" id="links">Elsewhere</h2>
+  <h2 class="section-title" id="links">Elsewhere</h2>
 
   <nav class="links" aria-label="My links">
 
@@ -386,7 +469,7 @@ footer a { color: inherit; }
           <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
         </svg>
       </span>
-      <span class="link-text"><strong>Instagram</strong><em>Daily posts and stories</em></span>
+      <span class="link-text"><strong>Instagram</strong><em>The daily training posts</em></span>
       <span class="arrow" aria-hidden="true">&rarr;</span>
     </a>
 
@@ -402,9 +485,7 @@ footer a { color: inherit; }
 
     <!-- Parked until there are real URLs, so the live page shows no
          half-finished rows. Uncomment a block, put the URL in href, then
-         delete data-placeholder and it becomes an ordinary link. A link
-         left with data-placeholder shows dashed with a "set me" pill and
-         cannot be tapped, so it is safe to leave one mid-edit.
+         delete data-placeholder and it becomes an ordinary link.
 
     <a class="link" href="#" data-placeholder data-track="tiktok">
       <span class="icon" aria-hidden="true">
@@ -426,16 +507,6 @@ footer a { color: inherit; }
     </a>
     -->
 
-    <!-- COPY ME to add a link:
-    <a class="link" href="https://example.com" target="_blank" rel="noopener" data-track="pick-a-name">
-      <span class="icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/></svg>
-      </span>
-      <span class="link-text"><strong>Title</strong><em>One short line</em></span>
-      <span class="arrow" aria-hidden="true">&rarr;</span>
-    </a>
-    -->
-
   </nav>
 
   <!-- ============================================================
@@ -447,7 +518,7 @@ footer a { color: inherit; }
 
   <form class="signup" id="signup" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
     <!-- EDIT ME: say what they get and how often. -->
-    <label class="signup-label" for="email">Drops and early access. Nothing else, no spam.</label>
+    <label class="signup-label" for="email">I'll tell you when the plan goes up. Nothing else, no spam.</label>
 
     <div class="signup-row">
       <input id="email" name="email" type="email" inputmode="email"
@@ -478,23 +549,11 @@ footer a { color: inherit; }
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // A half-finished link shouldn't bounce a visitor to the top of the page,
-  // and neither should the product card before the checkout link exists.
-  document.querySelectorAll("a[data-placeholder], a[href='PUT_THE_GUMROAD_LINK_HERE']").forEach(function (a) {
-    var href = a.getAttribute("href");
-    if (href === "#" || href === "PUT_THE_GUMROAD_LINK_HERE") {
-      a.addEventListener("click", function (e) { e.preventDefault(); });
-    }
+  // A card with no checkout link yet, and a half-finished link, should both
+  // refuse the tap rather than bouncing the visitor to the top of the page.
+  document.querySelectorAll("a[data-pending], a[data-placeholder]").forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); });
   });
-
-  // Belt and braces for the before/after pair: the inline onerror above
-  // catches a failure as it happens, this catches one that already did.
-  var compare = document.getElementById("compare");
-  if (compare) {
-    compare.querySelectorAll("img").forEach(function (img) {
-      if (img.complete && img.naturalWidth === 0) compare.hidden = true;
-    });
-  }
 
   // No-op until Plausible or Google Analytics is added to <head>.
   document.querySelectorAll("[data-track]").forEach(function (el) {
@@ -502,6 +561,16 @@ footer a { color: inherit; }
       var name = el.getAttribute("data-track");
       if (typeof window.plausible === "function") window.plausible("click", { props: { link: name } });
       if (typeof window.gtag === "function") window.gtag("event", "select_content", { content_type: "link", item_id: name });
+    });
+  });
+
+  // Belt and braces for the photo pairs: the inline onerror above catches a
+  // failure as it happens, this catches one that already did.
+  ["transform"].forEach(function (id) {
+    var block = document.getElementById(id);
+    if (!block) return;
+    block.querySelectorAll("img").forEach(function (img) {
+      if (img.complete && img.naturalWidth === 0) block.hidden = true;
     });
   });
 
