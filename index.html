@@ -2,70 +2,112 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- ============================================================
-     EDIT THESE THREE LINES FIRST
+     EDIT THESE FIRST — they show in Google and in link previews
      ============================================================ -->
 <title>Sebastian Uzice</title>
-<meta name="description" content="Links, and the stuff I make.">
+<meta name="description" content="I started at 177kg. This is what I did about it.">
+
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#100f0d" media="(prefers-color-scheme: dark)">
+
+<!-- Preview card for WhatsApp, iMessage, Discord, X.
+     Swap the two URLs once the page is live at its real address. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sebastian Uzice">
+<meta property="og:description" content="I started at 177kg. This is what I did about it.">
+<meta property="og:url" content="https://sabertooth1st.github.io/Sebas-insta/">
+<meta property="og:image" content="https://sabertooth1st.github.io/Sebas-insta/after.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316150f'/%3E%3Ctext x='16' y='22' font-size='16' font-family='system-ui,sans-serif' font-weight='700' fill='%23faf9f7' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 
 <style>
+/* ============================================================
+   Everything is in this one file on purpose: no build step, no
+   npm, nothing to deploy but the file itself.
+
+   Colours all come from the tokens below. Change --brand and the
+   whole page follows.
+   ============================================================ */
+
 :root {
-  --bg: #faf9f7;
-  --surface: #ffffff;
-  --text: #16150f;
-  --muted: #6b6a63;
-  --line: #e6e3dd;
-  --accent: #1b1a16;
-  --accent-text: #ffffff;
+  --bg:        #faf9f7;
+  --surface:   #ffffff;
+  --text:      #16150f;
+  --muted:     #6b6a63;
+  --line:      #e6e3dd;
+  --accent:    #1b1a16;   /* buttons */
+  --accent-text:#ffffff;
   --highlight: #f0efe9;
+  --brand:     #c2410c;   /* small accents: icons, focus rings */
+  --ok:        #2f7d52;
+  --err:       #b3261e;
+  --radius:    16px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #100f0d;
-    --surface: #1a1916;
-    --text: #f5f3ee;
-    --muted: #9b998f;
-    --line: #2c2a26;
-    --accent: #f5f3ee;
-    --accent-text: #16150f;
+    --bg:        #100f0d;
+    --surface:   #1a1916;
+    --text:      #f5f3ee;
+    --muted:     #9b998f;
+    --line:      #2c2a26;
+    --accent:    #f5f3ee;
+    --accent-text:#16150f;
     --highlight: #222019;
+    --brand:     #f0885a;
+    --ok:        #5fc98e;
+    --err:       #ff8189;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #100f0d;
-  --surface: #1a1916;
-  --text: #f5f3ee;
-  --muted: #9b998f;
-  --line: #2c2a26;
-  --accent: #f5f3ee;
-  --accent-text: #16150f;
+  --bg:        #100f0d;
+  --surface:   #1a1916;
+  --text:      #f5f3ee;
+  --muted:     #9b998f;
+  --line:      #2c2a26;
+  --accent:    #f5f3ee;
+  --accent-text:#16150f;
   --highlight: #222019;
+  --brand:     #f0885a;
+  --ok:        #5fc98e;
+  --err:       #ff8189;
 }
 
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 .wrap {
   max-width: 520px;
   margin: 0 auto;
-  padding: 48px 16px 64px;
+  padding: 48px 16px calc(64px + env(safe-area-inset-bottom));
+}
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus {
+  left: 50%; top: 8px; transform: translateX(-50%); z-index: 10;
+  background: var(--accent); color: var(--accent-text);
+  padding: 8px 14px; border-radius: 999px; text-decoration: none; font-weight: 600;
 }
 
 /* ---------- header ---------- */
 
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 88px; height: 88px;
   border-radius: 50%;
   margin: 0 auto 18px;
   display: block;
@@ -82,25 +124,42 @@ h1 {
   margin: 0 0 6px;
 }
 
-.handle {
-  text-align: center;
-  color: var(--muted);
-  font-size: 15px;
-  margin: 0 0 14px;
-}
-
+.handle { text-align: center; color: var(--muted); font-size: 15px; margin: 0 0 14px; }
 .handle a { color: inherit; text-decoration: none; }
 .handle a:hover { text-decoration: underline; }
 
 .bio {
   text-align: center;
-  color: var(--muted);
-  font-size: 15px;
-  margin: 0 auto 32px;
-  max-width: 380px;
+  font-size: 17px;
+  margin: 0 auto 28px;
+  max-width: 340px;
+  text-wrap: balance;
 }
 
-/* ---------- the paid slot ---------- */
+/* ---------- the before and after ---------- */
+
+.transform { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.transform[hidden] { display: none; }
+.transform figure { margin: 0; position: relative; }
+.transform img {
+  display: block; width: 100%;
+  aspect-ratio: 2 / 3; object-fit: cover;
+  border-radius: 12px; background: var(--highlight);
+}
+.transform figcaption {
+  position: absolute; left: 10px; bottom: 10px;
+  font-size: 11px; font-weight: 650; letter-spacing: .07em; text-transform: uppercase;
+  color: #fff; background: rgba(0,0,0,.55);
+  padding: 3px 9px; border-radius: 999px;
+}
+.transform-note {
+  margin: 0 0 30px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- a thing for sale ---------- */
 
 .feature {
   display: block;
@@ -108,124 +167,467 @@ h1 {
   color: inherit;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--radius);
   padding: 20px;
-  margin-bottom: 28px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform .15s ease, border-color .15s ease;
 }
-.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
+a.feature:hover { transform: translateY(-2px); border-color: var(--muted); }
 
 .tag {
   display: inline-block;
-  font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 11px; font-weight: 650;
+  letter-spacing: .08em; text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 8px;
 }
 
-.feature h2 {
-  font-size: 17px;
-  font-weight: 620;
-  margin: 0 0 6px;
-  letter-spacing: -0.01em;
-}
+.feature h2 { font-size: 17px; font-weight: 620; margin: 0 0 6px; letter-spacing: -0.01em; }
+.feature p  { font-size: 14px; color: var(--muted); margin: 0; }
+.feature .buy { margin-top: 16px; }
 
-.feature p {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 0 0 16px;
-}
-
-.buy {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
+.buy { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .price { font-size: 15px; font-weight: 600; }
+.price span { font-size: 13px; font-weight: 400; color: var(--muted); }
 
 .btn {
   background: var(--accent);
   color: var(--accent-text);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 14px; font-weight: 600;
   padding: 10px 20px;
   border-radius: 999px;
   white-space: nowrap;
 }
+
+/* Until the checkout link is pasted in, a card hides its price and button
+   and shows the waiting-list line instead — so the page can go live at any
+   moment without a button that goes nowhere. To arm a card: put the real
+   URL in href and delete data-pending. That is the whole edit. */
+.feature .pending {
+  display: none;
+  margin-top: 16px;
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+}
+a.feature[data-pending] .buy { display: none; }
+a.feature[data-pending] .pending { display: block; }
+
+/* the smaller card further down the page */
+.feature.compact { padding: 16px; }
+.feature.compact h2 { font-size: 15px; }
+.feature.compact .buy { margin-top: 12px; }
+
+/* ---------- how ---------- */
+
+.section-title {
+  margin: 30px 0 10px 2px;
+  font-size: 11px; font-weight: 650;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rules {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+}
+.rules li {
+  position: relative;
+  padding: 11px 0 11px 26px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--line);
+}
+.rules li:last-child { border-bottom: 0; }
+.rules li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 19px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.quote {
+  margin: 14px 0 0;
+  padding: 16px 18px;
+  background: var(--highlight);
+  border-radius: var(--radius);
+  font-size: 16px;
+}
+.quote p { margin: 0; }
+.quote cite { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--muted); }
 
 /* ---------- links ---------- */
 
 .links { display: flex; flex-direction: column; gap: 10px; }
 
 .link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
+  min-height: 60px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 15px 18px;
+  padding: 12px 18px;
   text-decoration: none;
   color: inherit;
-  font-size: 15px;
-  font-weight: 500;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform .15s ease, border-color .15s ease;
 }
 .link:hover { transform: translateY(-2px); border-color: var(--muted); }
 
-.link .arrow { margin-left: auto; color: var(--muted); font-size: 16px; }
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 40px;
+.icon {
+  flex: 0 0 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: var(--highlight);
+  color: var(--brand);
 }
+.icon svg { width: 19px; height: 19px; stroke-linecap: round; stroke-linejoin: round; }
+
+.link-text { display: flex; flex-direction: column; min-width: 0; }
+.link-text strong { font-size: 15px; font-weight: 600; }
+.link-text em {
+  font-style: normal; font-size: 13px; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.arrow { margin-left: auto; color: var(--muted); font-size: 16px; transition: transform .15s ease; }
+.link:hover .arrow { transform: translateX(3px); }
+
+/* a link that still points nowhere: obvious to you, and it refuses to do
+   anything if a visitor taps it. Delete data-placeholder to make it normal. */
+.link[data-placeholder] { opacity: .6; border-style: dashed; }
+.link[data-placeholder] .arrow::before {
+  content: "set me";
+  margin-right: 10px;
+  font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 7px;
+  vertical-align: middle;
+}
+
+/* ---------- mailing list ---------- */
+
+.signup {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.signup-label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+.signup-row { display: flex; gap: 8px; }
+
+.signup input[type="email"] {
+  flex: 1 1 auto; min-width: 0;
+  padding: 12px 14px;
+  font-size: 16px;            /* 16px stops iOS zooming in on focus */
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.signup input[type="email"]::placeholder { color: var(--muted); }
+
+.signup button {
+  flex: 0 0 auto;
+  padding: 12px 20px;
+  font: inherit; font-size: 14px; font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: 0; border-radius: 12px;
+  cursor: pointer;
+  transition: opacity .15s ease;
+}
+.signup button:hover { opacity: .85; }
+.signup button[disabled] { opacity: .5; cursor: default; }
+
+.gotcha { position: absolute; left: -9999px; }
+
+.signup-status { margin: 10px 0 0; font-size: 13px; min-height: 1.2em; color: var(--muted); }
+.signup-status[data-state="ok"]  { color: var(--ok); }
+.signup-status[data-state="err"] { color: var(--err); }
+
+/* ---------- footer ---------- */
+
+footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 40px; }
+footer a { color: inherit; }
+
+:where(a, button, input):focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
+
 <body>
+<a class="skip" href="#links">Skip to links</a>
+
 <div class="wrap">
 
-  <!-- Drop a square photo in the repo as avatar.jpg and it shows up here. -->
-  <img class="avatar" src="avatar.jpg" alt="" onerror="this.style.display='none'">
+  <!-- Square photo, in the repo as avatar.jpg. If it ever goes missing the
+       page falls back to a neutral placeholder rather than a broken image. -->
+  <img class="avatar" src="avatar.jpg" alt="Sebastian Uzice"
+       width="88" height="88"
+       onerror="this.src='avatar-placeholder.svg'">
 
   <h1>Sebastian Uzice</h1>
   <p class="handle"><a href="https://www.instagram.com/sebastianuzice/">@sebastianuzice</a></p>
-  <p class="bio">One line on who this is for and what they get. Replace this.</p>
+
+  <!-- EDIT ME: the one line that has to land. -->
+  <p class="bio">I started at 177kg. This is what I did about it.</p>
 
   <!-- ============================================================
-       THE PAID SLOT. This is the only part that makes money.
-       Point href at the Gumroad (or Stripe) checkout once it exists.
-       Delete this whole block until there is something to sell.
+       THE BEFORE AND AFTER. This is the whole page in one glance,
+       so it sits above everything else. Both are his own photos, from
+       the sets he labelled himself, and neither one is edited — same
+       kind of shot, same pose, so the only thing that changed is him.
+       Swap either by replacing before.jpg / after.jpg.
        ============================================================ -->
-  <a class="feature" href="#">
-    <span class="tag">New</span>
-    <h2>Name of the thing you sell</h2>
-    <p>One sentence on the result someone gets from it.</p>
+  <div class="transform" id="transform">
+    <figure>
+      <img src="before.jpg" alt="Sebastian at 177kg" loading="eager"
+           onerror="document.getElementById('transform').hidden = true">
+      <figcaption>At 177kg</figcaption>
+    </figure>
+    <figure>
+      <img src="after.jpg" alt="Sebastian now" loading="eager"
+           onerror="document.getElementById('transform').hidden = true">
+      <figcaption>Now</figcaption>
+    </figure>
+  </div>
+  <p class="transform-note">Same person. The how is below.</p>
+
+  <!-- ============================================================
+       THE MAIN PAID SLOT — the guide.
+
+       ONE THING TO DO: publish the guide on Gumroad, then put the
+       link it gives you in href and delete data-pending. The price
+       and the button appear by themselves. Until then the card says
+       it is not on sale, points at the mailing list, and cannot be
+       tapped, so the page is safe to publish right now.
+       ============================================================ -->
+  <a class="feature" href="PUT_THE_GUIDE_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="guide">
+    <span class="tag">The plan</span>
+    <h2>What I actually did</h2>
+    <p>The fasting window, what I cut, what I ate instead, and how the training week was laid out. Written the way I'd tell a friend, not a textbook.</p>
+
     <div class="buy">
-      <span class="price">$0</span>
+      <span class="price">$19 <span>one-off</span></span>
       <span class="btn">Get it</span>
     </div>
+
+    <p class="pending">Not on sale yet — join the list below and you'll get it first.</p>
   </a>
 
-  <div class="links">
-    <a class="link" href="https://www.instagram.com/sebastianuzice/">
-      Instagram <span class="arrow">&rarr;</span>
-    </a>
-    <a class="link" href="#">
-      YouTube <span class="arrow">&rarr;</span>
-    </a>
-    <a class="link" href="#">
-      Work with me <span class="arrow">&rarr;</span>
-    </a>
-  </div>
+  <!-- ============================================================
+       HOW. His own rules, in his own words. This is what makes the
+       card above believable, so it sits right under it.
+       ============================================================ -->
+  <h2 class="section-title">What it took</h2>
 
-  <footer>&copy; Sebastian Uzice</footer>
+  <ul class="rules">
+    <li>Six days a week. Weightlifting and cardio.</li>
+    <li>16:8 — everything I ate, inside an eight-hour window.</li>
+    <li>No carbs, no sugar. For a year.</li>
+    <li>Protein over carbs. That was the switch.</li>
+    <li>I started at home, where nobody could see me.</li>
+  </ul>
+
+  <blockquote class="quote">
+    <p>“Consistency is the key.”</p>
+    <cite>— Michael</cite>
+  </blockquote>
+
+  <!-- ============================================================
+       SECOND THING FOR SALE. Same rules as the card above: put the
+       Gumroad link in href and delete data-pending to arm it.
+       ============================================================ -->
+  <h2 class="section-title">Also</h2>
+
+  <a class="feature compact" href="PUT_THE_PRESETS_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="presets">
+    <h2>Sebastian Signature — 10 Lightroom presets</h2>
+    <p>One consistent look across a whole grid, in one tap, in the free Lightroom app.</p>
+
+    <div class="buy">
+      <span class="price">$12 <span>first week, then $19</span></span>
+      <span class="btn">Get it</span>
+    </div>
+
+    <p class="pending">Not on sale yet — the list below hears first.</p>
+  </a>
+
+  <!-- ============================================================
+       LINKS
+       To add one: copy a whole <a class="link"> ... </a> block,
+       change the href, the icon and the two lines of text.
+       ============================================================ -->
+  <h2 class="section-title" id="links">Elsewhere</h2>
+
+  <nav class="links" aria-label="My links">
+
+    <a class="link" href="https://www.instagram.com/sebastianuzice/" target="_blank" rel="noopener" data-track="instagram">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span class="link-text"><strong>Instagram</strong><em>The daily training posts</em></span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <a class="link" href="mailto:sebastianuzice4@gmail.com" data-track="email">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M3 7.5l9 6 9-6"/>
+        </svg>
+      </span>
+      <span class="link-text"><strong>Work with me</strong><em>sebastianuzice4@gmail.com</em></span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <!-- Parked until there are real URLs, so the live page shows no
+         half-finished rows. Uncomment a block, put the URL in href, then
+         delete data-placeholder and it becomes an ordinary link.
+
+    <a class="link" href="#" data-placeholder data-track="tiktok">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.6 2.4 2.2 3.8 4.5 4"/>
+        </svg>
+      </span>
+      <span class="link-text"><strong>TikTok</strong><em>Add the TikTok link</em></span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="link" href="#" data-placeholder data-track="youtube">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span class="link-text"><strong>YouTube</strong><em>Add the channel link</em></span>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    -->
+
+  </nav>
+
+  <!-- ============================================================
+       MAILING LIST
+       Does nothing until a real endpoint replaces YOUR_FORM_ID in
+       the action below. See README.md → Turning on the email form.
+       ============================================================ -->
+  <h2 class="section-title">Mailing list</h2>
+
+  <form class="signup" id="signup" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <!-- EDIT ME: say what they get and how often. -->
+    <label class="signup-label" for="email">I'll tell you when the plan goes up. Nothing else, no spam.</label>
+
+    <div class="signup-row">
+      <input id="email" name="email" type="email" inputmode="email"
+             autocomplete="email" required placeholder="you@email.com"
+             aria-describedby="signup-status">
+      <button type="submit">Join</button>
+    </div>
+
+    <!-- honeypot: bots fill this in, people never see it -->
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="gotcha">
+
+    <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
+  </form>
+
+  <footer>&copy; <span id="year">2026</span> Sebastian Uzice</footer>
 
 </div>
+
+<script>
+/* ============================================================
+   Optional. Every link still works with this whole block deleted.
+   It runs the email form, the footer year, and hands link clicks
+   to analytics if any is ever added.
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var year = document.getElementById("year");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  // A card with no checkout link yet, and a half-finished link, should both
+  // refuse the tap rather than bouncing the visitor to the top of the page.
+  document.querySelectorAll("a[data-pending], a[data-placeholder]").forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); });
+  });
+
+  // No-op until Plausible or Google Analytics is added to <head>.
+  document.querySelectorAll("[data-track]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      var name = el.getAttribute("data-track");
+      if (typeof window.plausible === "function") window.plausible("click", { props: { link: name } });
+      if (typeof window.gtag === "function") window.gtag("event", "select_content", { content_type: "link", item_id: name });
+    });
+  });
+
+  // Belt and braces for the photo pairs: the inline onerror above catches a
+  // failure as it happens, this catches one that already did.
+  ["transform"].forEach(function (id) {
+    var block = document.getElementById(id);
+    if (!block) return;
+    block.querySelectorAll("img").forEach(function (img) {
+      if (img.complete && img.naturalWidth === 0) block.hidden = true;
+    });
+  });
+
+  var form = document.getElementById("signup");
+  if (!form) return;
+
+  var status = document.getElementById("signup-status");
+  var button = form.querySelector("button[type=submit]");
+  var action = form.getAttribute("action") || "";
+
+  function say(message, state) {
+    if (!status) return;
+    status.textContent = message;
+    if (state) status.setAttribute("data-state", state);
+    else status.removeAttribute("data-state");
+  }
+
+  // Until a real endpoint is set, never let the form navigate away:
+  // that would swallow the address without telling anyone.
+  var connected = action.indexOf("YOUR_FORM_ID") === -1 && /^https?:\/\//.test(action);
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!connected) {
+      say("The mailing list isn't switched on yet — check back shortly.", "err");
+      console.warn("[signup] No form endpoint set. See README.md, Turning on the email form.");
+      return;
+    }
+
+    if (form.querySelector("[name=_gotcha]").value) return; // bot
+
+    var email = form.querySelector("#email").value.trim();
+    if (!email) return;
+
+    button.disabled = true;
+    say("Sending…");
+
+    fetch(action, {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, source: "link-in-bio" })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        form.reset();
+        say("You're on the list. Talk soon.", "ok");
+      })
+      .catch(function (err) {
+        console.error("[signup]", err);
+        say("That didn't send. Try again in a moment?", "err");
+      })
+      .then(function () { button.disabled = false; });
+  });
+})();
+</script>
 </body>
 </html>
