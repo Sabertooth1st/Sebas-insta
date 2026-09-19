@@ -19,6 +19,8 @@ The landing page behind the Instagram bio link, and the plan for what gets poste
   in this repository.
 - `content/14-day-plan.md` — what to post, in what order, and when the product
   goes live.
+- `.nojekyll` — empty on purpose. It tells GitHub Pages to serve these files as
+  they are instead of running Jekyll over them first. Leave it there.
 
 The page is built around one thing: the before and after, then the plan that
 produced it. Everything else on the page is secondary to those two.
@@ -30,25 +32,28 @@ Two sets, and they are not interchangeable:
 | | For | Why |
 | --- | --- | --- |
 | `before.jpg`, `after.jpg` | The web page | Plain 2:3 crops, no text. The page lays them out side by side and captions them in HTML, so they stay sharp and readable at any width. |
-| `assets/before-after.jpg` | An Instagram feed post | 1080×675, captioned **177 KG / TODAY**. The text is baked in because a feed post has to carry its own meaning. |
+| `assets/before-after.jpg` | An Instagram feed post — **and the page's link preview** | 1080×675, captioned **177 KG / TODAY**. The text is baked in because a feed post has to carry its own meaning. `index.html` points `og:image` at this file, so renaming it silently breaks the preview on every shared link. |
 | `assets/before-after-story.jpg` | An Instagram story | 1080×1920, the same pair at story size. |
-| `assets/progress-three-stage.jpg` | A feed post | 1620×675, three stages — 177 kg, along the way, today. The middle frame is the one that makes it look survivable rather than magic. |
+| `assets/progress-three-stage.jpg` | A feed post — check the crop first | 1620×675, three stages — 177 kg, along the way, today. The middle frame is the one that makes it look survivable rather than magic. At 2.4:1 it is wider than Instagram's 1.91:1 feed limit, so post it as a carousel or a story, or re-crop, or it gets cut. |
 
-Do not put the captioned versions on the page: the page already captions them,
-and you would get the label twice.
+Do not put the captioned versions on the page body: the page already captions
+them in HTML, and you would get the label twice. The one exception is
+`og:image`, which has to be a wide captioned composite — a 2:3 portrait gets
+cropped to unreadable by the preview cards in WhatsApp and iMessage.
 
 ## What is still outstanding
 
 | Where | What it needs |
 | --- | --- |
-| The plan | The Gumroad link, replacing `PUT_THE_GUIDE_LINK_HERE` |
-| Presets | The Gumroad link, replacing `PUT_THE_PRESETS_LINK_HERE` |
-| TikTok / YouTube | Parked in a comment below the Instagram link. Uncomment a block once its URL exists |
+| The guide | The Gumroad link, replacing the card's `href="#signup"` |
+| Presets | Parked in a comment until the guide has launched, then its Gumroad link |
+| TikTok / YouTube | Parked in a comment below the email link. Uncomment a block once its URL exists |
 | Mailing list | A form endpoint — see below |
 | GitHub Pages | Not switched on yet — see *Putting the page online* |
 
 Nothing on the page points anywhere dead, so it is safe to publish as it
-stands. Search `index.html` for `EDIT ME` to find the copy worth revisiting.
+stands. Search `index.html` for `EDIT ME` and `EDIT THESE FIRST` to find the
+copy worth revisiting.
 
 ## Arming a thing for sale
 
@@ -58,11 +63,19 @@ pointing at the mailing list instead, and refuses to be tapped.
 
 To put something on sale, make two edits to that card:
 
-1. Put the real checkout URL in `href`.
+1. Replace `href="#signup"` with the real checkout URL.
 2. Delete `data-pending`.
+
+The card refuses to go live until step 1 is a real `http(s)` link, whatever you
+do to `data-pending` — the script checks the `href` itself. So a half-finished
+edit shows the not-on-sale card rather than a **Get it** button that 404s.
 
 The price and the **Get it** button appear on their own. That is the whole
 change — there is nothing else to switch on.
+
+**When the launch week ends**, change the card's price in `index.html` to the
+full price and update `product/README.md` to match. Nothing does this for you,
+and until you do the card undercharges against Gumroad.
 
 The prices live in two places: the card in `index.html` and the list in
 `product/README.md`. Change one, change the other. They drifted apart once
@@ -100,21 +113,37 @@ The form is real, but it deliberately refuses to send anywhere until an endpoint
 is set. Better a visible "not switched on yet" than an address disappearing into
 nothing.
 
-Pick one, all free to start:
+**Read this part before you pick, because the two options are not
+interchangeable and the difference bites on launch day.**
 
-- **Formspree** — fastest. Sign up, make a form, copy the endpoint that looks like
-  `https://formspree.io/f/abcdwxyz`. Addresses arrive by email and export to CSV.
-- **Buttondown** or **MailerLite** — more setup, but you can actually mail the
-  list afterwards, which is the entire point of collecting it.
+- **Formspree** — the drop-in. Sign up, make a form, copy the endpoint that
+  looks like `https://formspree.io/f/abcdwxyz`. Addresses arrive by email and
+  export to CSV. **It cannot send email to the list.** It collects addresses;
+  it is not a mailing tool. If you use it, launch day means exporting a CSV and
+  importing it somewhere else under time pressure.
+- **Buttondown** or **MailerLite** — twenty minutes more setup, and you can
+  actually mail the list, which is the entire point of collecting it. **These
+  will not work by swapping the `action` alone.** The page's script posts JSON,
+  which is Formspree's shape; Buttondown expects form-encoded data and
+  MailerLite needs an API key, so both fail silently and the visitor just sees
+  "That didn't send." Use their own embed snippet in place of the whole
+  `<form class="signup">` block instead.
 
-Then in `index.html` find:
+`content/14-day-plan.md` has you emailing the list on day 10, so pick one that
+can send.
+
+For Formspree, in `index.html` find:
 
 ```html
-<form class="signup" id="signup" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<form class="signup" id="signup" action="" method="POST">
 ```
 
-and replace the `action` value with the endpoint. The script notices on its own
+and put the endpoint inside the empty `action=""`. The script notices on its own
 and starts posting to it. A hidden honeypot field already filters most bots.
+
+Whichever you pick, **send yourself one real address and confirm it arrives**
+before day 1. If the endpoint is wrong the page says nothing is switched on and
+carries on looking fine, so a silent failure here costs you the whole fortnight.
 
 ## Editing the page
 
@@ -122,17 +151,21 @@ In order of what matters:
 
 1. **The before and after.** Replace `before.jpg` and `after.jpg` to change it.
    They are shown at 2:3 and cropped to fill, so tall photos work best. Pick
-   two shots in the same pose and the same kind of place — it is the likeness
-   that makes the difference read. If either file is missing the whole block
+   two shots of the same kind — both full body, both mirror selfies — because
+   it is the likeness that makes the difference read. Do not pair a dark
+   outdoor shot with a bright indoor one; that invites the reader to credit
+   the lighting instead of the work. If either file is missing the whole block
    hides itself rather than showing a broken image.
 2. **The bio line and the plan card.** The two pieces of copy that decide
    whether anyone scrolls.
 3. **"What it took".** The list of rules, in his own words. It is what makes
    the card above believable, which is why it sits directly under it.
-4. **The links.** There is a `COPY ME` block in the comments to paste for a new
-   one. Put the real URL in `href` and delete `data-placeholder` to make a link
-   live; leave the attribute on and it shows a dashed **set me** pill and
-   cannot be tapped.
+4. **The links.** There is a parked TikTok/YouTube block inside a comment at
+   the end of the `Elsewhere` list — copy one of those whole
+   `<a class="link">…</a>` blocks for a new link. Change the `href`, the
+   `data-track` name, the icon and the two lines of text. Delete
+   `data-placeholder` to make it live; leave the attribute on and it shows a
+   dashed **set me** pill and cannot be tapped.
 
 The colours are the tokens at the top of the `<style>` block. `--brand` drives
 the icons and focus rings; `--accent` drives the buttons. Light and dark are

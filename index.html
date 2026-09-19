@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- ============================================================
-     EDIT THESE FIRST — they show in Google and in link previews
+     EDIT THESE FIRST — the title and description below are what
+     Google shows. They are NOT the same tags as the link preview:
+     if you change them, change the matching og:title and
+     og:description a few lines down, and the bio line in the body.
+     All three are separate copies of the same words.
      ============================================================ -->
 <title>Sebastian Uzice</title>
 <meta name="description" content="I started at 177kg. This is what I did about it.">
@@ -33,8 +37,9 @@
    Everything is in this one file on purpose: no build step, no
    npm, nothing to deploy but the file itself.
 
-   Colours all come from the tokens below. Change --brand and the
-   whole page follows.
+   Colours all come from the tokens below. --brand is the small
+   accent (bullets, link icons, focus rings); --accent is the
+   buttons. Changing --brand does not repaint the page.
    ============================================================ */
 
 :root {
@@ -42,7 +47,7 @@
   --surface:   #ffffff;
   --text:      #16150f;
   --muted:     #6b6a63;
-  --line:      #e6e3dd;
+  --line:      #d6d2c9;
   --accent:    #1b1a16;   /* buttons */
   --accent-text:#ffffff;
   --highlight: #f0efe9;
@@ -81,6 +86,12 @@
 }
 
 * { box-sizing: border-box; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -94,10 +105,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.wrap {
+main.wrap {
+  outline: none;
   max-width: 520px;
   margin: 0 auto;
-  padding: 48px 16px calc(64px + env(safe-area-inset-bottom));
+  padding: 48px 16px 64px;
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
 }
 
 .skip { position: absolute; left: -9999px; }
@@ -144,6 +157,9 @@ h1 {
 .transform { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
 .transform[hidden] { display: none; }
 .transform figure { margin: 0; position: relative; }
+/* 2:3 matches before.jpg/after.jpg at 600x900. If you swap in photos of a
+   different shape, keep them the same shape as each other or the two columns
+   stop lining up on browsers without aspect-ratio support. */
 .transform img {
   display: block; width: 100%;
   aspect-ratio: 2 / 3; object-fit: cover;
@@ -354,6 +370,7 @@ a.feature[data-pending] .pending { display: block; }
 /* ---------- footer ---------- */
 
 footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 40px; }
+footer .disclaimer { max-width: 380px; margin: 0 auto 14px; text-wrap: balance; }
 footer a { color: inherit; }
 
 :where(a, button, input):focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
@@ -363,18 +380,18 @@ footer a { color: inherit; }
 </head>
 
 <body>
-<a class="skip" href="#links">Skip to links</a>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="wrap">
+<main class="wrap" id="main" tabindex="-1">
 
   <!-- Square photo, in the repo as avatar.jpg. If it ever goes missing the
        page falls back to a neutral placeholder rather than a broken image. -->
   <img class="avatar" src="avatar.jpg" alt="Sebastian Uzice"
        width="88" height="88"
-       onerror="this.src='avatar-placeholder.svg'">
+       onerror="this.onerror=null; this.src='avatar-placeholder.svg'">
 
   <h1>Sebastian Uzice</h1>
-  <p class="handle"><a href="https://www.instagram.com/sebastianuzice/">@sebastianuzice</a></p>
+  <p class="handle"><a href="https://www.instagram.com/sebastianuzice/" target="_blank" rel="noopener noreferrer" data-track="handle">@sebastianuzice</a></p>
 
   <!-- EDIT ME: the one line that has to land. -->
   <p class="bio">I started at 177kg. This is what I did about it.</p>
@@ -389,29 +406,30 @@ footer a { color: inherit; }
   <div class="transform" id="transform">
     <figure>
       <img src="before.jpg" alt="Sebastian at 177kg" loading="eager"
-           onerror="document.getElementById('transform').hidden = true">
+           onerror="this.onerror=null; document.getElementById('transform').hidden = true; document.getElementById('transform-note').hidden = true">
       <figcaption>At 177kg</figcaption>
     </figure>
     <figure>
       <img src="after.jpg" alt="Sebastian now" loading="eager"
-           onerror="document.getElementById('transform').hidden = true">
+           onerror="this.onerror=null; document.getElementById('transform').hidden = true; document.getElementById('transform-note').hidden = true">
       <figcaption>Now</figcaption>
     </figure>
   </div>
-  <p class="transform-note">Same person. The how is below.</p>
+  <p class="transform-note" id="transform-note">Same person. The how is below.</p>
 
   <!-- ============================================================
        THE MAIN PAID SLOT — the guide.
 
-       ONE THING TO DO: publish the guide on Gumroad, then put the
-       link it gives you in href and delete data-pending. The price
+       TWO EDITS TO DO: publish the guide on Gumroad, then replace
+       href="#signup" with the link it gives you and delete
+       data-pending. The price
        and the button appear by themselves. Until then the card says
        it is not on sale, points at the mailing list, and cannot be
        tapped, so the page is safe to publish right now.
        ============================================================ -->
-  <a class="feature" href="PUT_THE_GUIDE_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="guide">
-    <span class="tag">The plan</span>
-    <h2>What I actually did</h2>
+  <a class="feature" href="#signup" data-pending data-track="guide">
+    <span class="tag">The guide</span>
+    <h2>From 177 — what I actually did</h2>
     <p>The fasting window, what I cut, what I ate instead, and how the training week was laid out. Written the way I'd tell a friend, not a textbook.</p>
 
     <div class="buy">
@@ -431,23 +449,27 @@ footer a { color: inherit; }
   <ul class="rules">
     <li>Six days a week. Weightlifting and cardio.</li>
     <li>16:8 — everything I ate, inside an eight-hour window.</li>
-    <li>No carbs, no sugar. For a year.</li>
+    <li>No sugar, no bread, no rice. For a year.</li>
     <li>Protein over carbs. That was the switch.</li>
-    <li>I started at home, where nobody could see me.</li>
   </ul>
 
   <blockquote class="quote">
-    <p>“Consistency is the key.”</p>
-    <cite>— Michael</cite>
+    <p>“I started at home, where nobody could see me.”</p>
+    <cite>— Sebastian</cite>
   </blockquote>
 
   <!-- ============================================================
        SECOND THING FOR SALE. Same rules as the card above: put the
        Gumroad link in href and delete data-pending to arm it.
        ============================================================ -->
+  <!-- Parked until the guide has launched. Two things for sale at once
+       means people choose instead of buying, and the presets have nothing
+       to do with the story bringing people here — see content/14-day-plan.md.
+       To put it back: delete this comment's opening and closing lines.
+
   <h2 class="section-title">Also</h2>
 
-  <a class="feature compact" href="PUT_THE_PRESETS_LINK_HERE" data-pending target="_blank" rel="noopener" data-track="presets">
+  <a class="feature compact" href="#signup" data-pending data-track="presets">
     <h2>Sebastian Signature — 10 Lightroom presets</h2>
     <p>One consistent look across a whole grid, in one tap, in the free Lightroom app.</p>
 
@@ -458,23 +480,25 @@ footer a { color: inherit; }
 
     <p class="pending">Not on sale yet — the list below hears first.</p>
   </a>
+  -->
 
   <!-- ============================================================
        LINKS
        To add one: copy a whole <a class="link"> ... </a> block,
-       change the href, the icon and the two lines of text.
+       change the href, the data-track name, the icon and the two
+       lines of text.
        ============================================================ -->
-  <h2 class="section-title" id="links">Elsewhere</h2>
+  <h2 class="section-title">Elsewhere</h2>
 
   <nav class="links" aria-label="My links">
 
-    <a class="link" href="https://www.instagram.com/sebastianuzice/" target="_blank" rel="noopener" data-track="instagram">
+    <a class="link" href="https://www.instagram.com/sebastianuzice/" target="_blank" rel="noopener noreferrer" data-track="instagram">
       <span class="icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
         </svg>
       </span>
-      <span class="link-text"><strong>Instagram</strong><em>The daily training posts</em></span>
+      <span class="link-text"><strong>Instagram</strong><em>Training, day to day</em></span>
       <span class="arrow" aria-hidden="true">&rarr;</span>
     </a>
 
@@ -516,19 +540,21 @@ footer a { color: inherit; }
 
   <!-- ============================================================
        MAILING LIST
-       Does nothing until a real endpoint replaces YOUR_FORM_ID in
-       the action below. See README.md → Turning on the email form.
+       action is empty on purpose: until a real endpoint is pasted in,
+       nothing can carry an address off this page, with or without
+       JavaScript. See README.md → Turning on the email form.
        ============================================================ -->
-  <h2 class="section-title">Mailing list</h2>
+  <h2 class="section-title">Get it first</h2>
 
-  <form class="signup" id="signup" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <form class="signup" id="signup" action="" method="POST">
     <!-- EDIT ME: say what they get and how often. -->
-    <label class="signup-label" for="email">I'll tell you when the plan goes up. Nothing else, no spam.</label>
+    <p class="signup-label" id="signup-blurb">I'll tell you when the guide goes up. Nothing else.</p>
+    <label class="sr-only" for="email">Email address</label>
 
     <div class="signup-row">
       <input id="email" name="email" type="email" inputmode="email"
              autocomplete="email" required placeholder="you@email.com"
-             aria-describedby="signup-status">
+             aria-describedby="signup-blurb signup-status">
       <button type="submit">Join</button>
     </div>
 
@@ -536,17 +562,27 @@ footer a { color: inherit; }
     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="gotcha">
 
     <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
+
+    <noscript>
+      <p class="signup-status" data-state="err">This form needs JavaScript. Email
+      me instead: <a href="mailto:sebastianuzice4@gmail.com">sebastianuzice4@gmail.com</a></p>
+    </noscript>
   </form>
 
-  <footer>&copy; <span id="year">2026</span> Sebastian Uzice</footer>
+  <footer>
+    <p class="disclaimer">This is what I did, not medical advice. Talk to a doctor before
+    you change how you eat or train.</p>
+    &copy; <span id="year">2026</span> Sebastian Uzice
+  </footer>
 
-</div>
+</main>
 
 <script>
 /* ============================================================
-   Optional. Every link still works with this whole block deleted.
-   It runs the email form, the footer year, and hands link clicks
-   to analytics if any is ever added.
+   Do not delete this block. It runs the tap guards, the email form,
+   the footer year and the photo fallback, and hands link clicks to
+   analytics if any is ever added. Without it the not-on-sale card
+   navigates to a 404 and the form posts the address into nothing.
    ============================================================ */
 (function () {
   "use strict";
@@ -554,9 +590,29 @@ footer a { color: inherit; }
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // A card with no checkout link yet, and a half-finished link, should both
-  // refuse the tap rather than bouncing the visitor to the top of the page.
-  document.querySelectorAll("a[data-pending], a[data-placeholder]").forEach(function (a) {
+  // A card is only really for sale once its href is a real off-site link.
+  // Deriving that from the href, rather than trusting data-pending to have
+  // been removed by hand, means a half-finished edit cannot ship a card that
+  // looks armed and sends buyers to a 404.
+  var live = /^(https?:|mailto:)/;
+  var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll("a.feature").forEach(function (a) {
+    if (live.test(a.getAttribute("href") || "")) return;   // armed, leave it
+    a.setAttribute("data-pending", "");                    // re-applies the CSS
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var form = document.getElementById("signup");
+      if (!form) return;
+      form.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+      var field = document.getElementById("email");
+      if (field) field.focus({ preventScroll: true });
+    });
+  });
+
+  // A link that still points nowhere refuses the tap rather than bouncing
+  // the visitor to the top of the page.
+  document.querySelectorAll("a[data-placeholder]").forEach(function (a) {
     a.addEventListener("click", function (e) { e.preventDefault(); });
   });
 
@@ -569,15 +625,17 @@ footer a { color: inherit; }
     });
   });
 
-  // Belt and braces for the photo pairs: the inline onerror above catches a
-  // failure as it happens, this catches one that already did.
-  ["transform"].forEach(function (id) {
-    var block = document.getElementById(id);
-    if (!block) return;
-    block.querySelectorAll("img").forEach(function (img) {
-      if (img.complete && img.naturalWidth === 0) block.hidden = true;
+  // Belt and braces for the before/after pair: the inline onerror above
+  // catches a failure as it happens, this catches one that already did.
+  var pair = document.getElementById("transform");
+  if (pair) {
+    pair.querySelectorAll("img").forEach(function (img) {
+      if (img.complete && img.naturalWidth === 0) pair.hidden = true;
     });
-  });
+    // the caption lives outside the pair, so it has to go with it
+    var note = document.getElementById("transform-note");
+    if (note && pair.hidden) note.hidden = true;
+  }
 
   var form = document.getElementById("signup");
   if (!form) return;
@@ -595,20 +653,29 @@ footer a { color: inherit; }
 
   // Until a real endpoint is set, never let the form navigate away:
   // that would swallow the address without telling anyone.
-  var connected = action.indexOf("YOUR_FORM_ID") === -1 && /^https?:\/\//.test(action);
+  var connected = /^https?:\/\//.test(action);
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    try { submit(); } catch (err) {
+      console.error("[signup]", err);
+      say("That didn't send. Try again in a moment?", "err");
+      button.disabled = false;
+    }
+  });
 
+  function submit() {
     if (!connected) {
       say("The mailing list isn't switched on yet — check back shortly.", "err");
       console.warn("[signup] No form endpoint set. See README.md, Turning on the email form.");
       return;
     }
 
-    if (form.querySelector("[name=_gotcha]").value) return; // bot
+    var honey = form.querySelector("[name=_gotcha]");
+    if (honey && honey.value) return; // bot
 
-    var email = form.querySelector("#email").value.trim();
+    var field = form.querySelector("#email");
+    var email = field ? field.value.trim() : "";
     if (!email) return;
 
     button.disabled = true;
@@ -629,7 +696,7 @@ footer a { color: inherit; }
         say("That didn't send. Try again in a moment?", "err");
       })
       .then(function () { button.disabled = false; });
-  });
+  }
 })();
 </script>
 </body>
