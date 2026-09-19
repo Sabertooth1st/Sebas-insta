@@ -19,10 +19,11 @@ no longer the main play.
 
 ## What is in this repo
 
-`assets/before-after.jpg` and `assets/before-after-story.jpg` are the
-before-and-after images, and `assets/progress-three-stage.jpg` adds the stage
-in between. Those are meant to be public: they are the page's main piece of
-content and the product's proof.
+The images, and only the images. `before.jpg` and `after.jpg` are the plain
+pair the landing page lays out itself. `assets/before-after.jpg`,
+`assets/before-after-story.jpg` and `assets/progress-three-stage.jpg` are the
+captioned versions for posting to Instagram. Those are all meant to be public:
+they are the page's main piece of content and the product's proof.
 
 The photos in them are the owner's own, grouped by his labels: the 177 kg
 panel comes from the set he labelled AT 177KG and the current panel from
@@ -33,3 +34,6 @@ was wrong.
 
 Nothing else product-related belongs here. If a future change needs the product
 source, it lives in the project files alongside the launch notes, not in git.
+
+The prices above are also printed on the cards in `index.html`. If one changes,
+change both.

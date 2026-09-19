@@ -13,10 +13,29 @@ The landing page behind the Instagram bio link, and the plan for what gets poste
   both are gym mirror selfies in the same pose, so the comparison is like for
   like. Neither is edited.
 - `avatar.jpg` — the profile photo, with `avatar-placeholder.svg` as its fallback.
-- `content/14-day-plan.md` — what to post, in what order, and when the product goes live.
+- `assets/` — the captioned versions, for posting to Instagram rather than for
+  the page. See below.
+- `product/README.md` — what is for sale, at what price, and why none of it is
+  in this repository.
+- `content/14-day-plan.md` — what to post, in what order, and when the product
+  goes live.
 
 The page is built around one thing: the before and after, then the plan that
 produced it. Everything else on the page is secondary to those two.
+
+### Page photos vs. post photos
+
+Two sets, and they are not interchangeable:
+
+| | For | Why |
+| --- | --- | --- |
+| `before.jpg`, `after.jpg` | The web page | Plain 2:3 crops, no text. The page lays them out side by side and captions them in HTML, so they stay sharp and readable at any width. |
+| `assets/before-after.jpg` | An Instagram feed post | 1080×675, captioned **177 KG / TODAY**. The text is baked in because a feed post has to carry its own meaning. |
+| `assets/before-after-story.jpg` | An Instagram story | 1080×1920, the same pair at story size. |
+| `assets/progress-three-stage.jpg` | A feed post | 1620×675, three stages — 177 kg, along the way, today. The middle frame is the one that makes it look survivable rather than magic. |
+
+Do not put the captioned versions on the page: the page already captions them,
+and you would get the label twice.
 
 ## What is still outstanding
 
@@ -26,6 +45,7 @@ produced it. Everything else on the page is secondary to those two.
 | Presets | The Gumroad link, replacing `PUT_THE_PRESETS_LINK_HERE` |
 | TikTok / YouTube | Parked in a comment below the Instagram link. Uncomment a block once its URL exists |
 | Mailing list | A form endpoint — see below |
+| GitHub Pages | Not switched on yet — see *Putting the page online* |
 
 Nothing on the page points anywhere dead, so it is safe to publish as it
 stands. Search `index.html` for `EDIT ME` to find the copy worth revisiting.
@@ -44,31 +64,35 @@ To put something on sale, make two edits to that card:
 The price and the **Get it** button appear on their own. That is the whole
 change — there is nothing else to switch on.
 
+The prices live in two places: the card in `index.html` and the list in
+`product/README.md`. Change one, change the other. They drifted apart once
+already.
+
 ## Putting the page online
 
-This repository is private, and GitHub Pages only serves private repositories on
-a paid plan. Two free ways round that:
+This repository is **public**, so GitHub Pages serves it free. That is the whole
+reason nothing paid is allowed in here — see `product/README.md`.
 
-**Make the repository public, then use GitHub Pages.** Nothing here is secret,
-so this is the simplest route.
-
-1. Repo **Settings** → **General** → **Danger Zone** → **Change visibility** → public.
-2. **Settings** → **Pages** → Source: **Deploy from a branch**.
+1. Repo **Settings** → **Pages**.
+2. Under **Source**, pick **Deploy from a branch**.
 3. Pick the repo's default branch, folder `/ (root)`. Save.
 4. A minute later it is live at `https://sabertooth1st.github.io/Sebas-insta/`.
 
-**Or keep it private and use Cloudflare Pages.** Free on private repos, and
-faster.
+That URL is what goes in the Instagram bio, and every push to that branch
+updates it within a minute.
 
-1. Sign in at dash.cloudflare.com → **Workers & Pages** → **Create** → **Pages**
-   → **Connect to Git**, and pick this repository.
-2. Framework preset: **None**. Leave the build command empty and the output
-   directory as `/`.
-3. Deploy. The URL looks like `https://sebas-insta.pages.dev`.
+If the repository is ever made private, GitHub Pages stops serving it unless you
+are on a paid plan. Cloudflare Pages is the free way round that: dash.cloudflare.com
+→ **Workers & Pages** → **Create** → **Pages** → **Connect to Git**, framework
+preset **None**, empty build command, output directory `/`. The URL looks like
+`https://sebas-insta.pages.dev`.
 
-Whichever it is, that URL goes in the Instagram bio, and every push updates it
-within a minute. A custom domain is a nicer link and costs about $10 a year —
-worth doing, but not before there is something to sell.
+A custom domain is a nicer link and costs about $10 a year — worth doing, but not
+before there is something to sell.
+
+> The page's link-preview tags (`og:url`, `og:image`) hardcode the
+> `sabertooth1st.github.io` address. If you host somewhere else, update those two
+> lines in `index.html` or shared links will preview the wrong thing.
 
 ## Turning on the email form
 
